@@ -63,7 +63,7 @@ export default class EnemyRando implements PluginClass {
             enduranceRange: [1, 1.5],
         }
         let mapObjectSpawnQueue: MapEntity[] = []
-        let seed: string = 'obama'
+        let seed: number = Number((Math.random() + '').slice(2))
 
         ig.Game.inject({
             loadLevel(map: sc.MapModel.Map, ...args) {

@@ -1,9 +1,10 @@
-export function fixedRandomNumber(seed: string | number): number {
-    // @ts-ignore
-    return new Math.seedrandomSeed(seed)()
+export function fixedRandomNumber(seed: number): number {
+    // @ts-expect-error
+    const number = new Math.seedrandomSeed(seed)()
+    return number
 }
 
-export function fixedRandomInt(seed: string | number, min: number, max: number): number {
+export function fixedRandomInt(seed: number, min: number, max: number): number {
     return (fixedRandomNumber(seed) * (max - min) + min) >>> 0
 }
 export interface EnemyData {
@@ -72,7 +73,7 @@ export async function loadAllEnemyTypes(data: RawRegularEnemies) {
 
 export function randomizeEnemy(
     enemy: Enemy,
-    seed: string,
+    seed: number,
     data: EnemyData,
     preset: EnemyGeneratorPreset,
     changeMap: Record<string, string[]>,
@@ -94,7 +95,7 @@ export function randomizeEnemy(
     return getRandomEnemy(
         enemy.settings.enemyInfo,
         { x: enemy.x, y: enemy.y, width: 16, height: 16, z },
-        (enemy.x * enemy.y * parseInt(seed.split('_')[1])) % 1000000,
+        (enemy.x * enemy.y * seed) % 1000000,
         data.regularEnemies,
         preset,
         changeMap
@@ -103,7 +104,7 @@ export function randomizeEnemy(
 
 export function randomizeSpawner(
     spawner: Spawner,
-    seed: string,
+    seed: number,
     data: EnemyData,
     preset: EnemyGeneratorPreset,
     changeMap: Record<string, string[]>,
@@ -111,7 +112,7 @@ export function randomizeSpawner(
 ) {
     // console.log('spawner', spawner, seed, data, preset)
 
-    const spawnerSeed = (spawner.x * spawner.y * parseInt(seed.split('_')[1])) % 1000000
+    const spawnerSeed = (spawner.x * spawner.y * seed) % 1000000
     const allMapObjects: MapEntity[] = []
     const allObjectsSet = new Set<string>()
 
@@ -235,7 +236,19 @@ function getRandomEnemy(
 
     const randTypeIndex = fixedRandomInt(enemySeed, 0, compatibleEnemyTypes.length)
     const randType = compatibleEnemyTypes[randTypeIndex][0]
-    // console.log('rand', enemySeed, randTypeIndex, 'from', enemyType, 'to', randType, 'endurance', endurance, 'to', data[randType].endurance)
+    console.log(
+        'rand',
+        enemySeed,
+        randTypeIndex,
+        'from',
+        enemyType,
+        'to',
+        randType,
+        'endurance',
+        endurance,
+        'to',
+        data[randType].endurance
+    )
 
     enemySeed *= 1.5
     let randLevel = fixedRandomInt(enemySeed, origLevel - preset.levelRange[0], origLevel + preset.levelRange[1])
