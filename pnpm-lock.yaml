@@ -20,6 +20,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^6.20.0
         version: 6.21.0(eslint@8.57.0)(typescript@5.4.2)
+      ccmodmanager:
+        specifier: github:CCDirectLink/CCModManager
+        version: https://codeload.github.com/CCDirectLink/CCModManager/tar.gz/b548a8b7cbd098d20282ee9b2bad28af22ee4518
       esbuild:
         specifier: ^0.20.0
         version: 0.20.1
@@ -350,6 +353,10 @@ packages:
   callsites@3.1.0:
     resolution: {integrity: sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==}
     engines: {node: '>=6'}
+
+  ccmodmanager@https://codeload.github.com/CCDirectLink/CCModManager/tar.gz/b548a8b7cbd098d20282ee9b2bad28af22ee4518:
+    resolution: {tarball: https://codeload.github.com/CCDirectLink/CCModManager/tar.gz/b548a8b7cbd098d20282ee9b2bad28af22ee4518}
+    version: 0.9.19
 
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
@@ -1001,6 +1008,8 @@ snapshots:
       fill-range: 7.0.1
 
   callsites@3.1.0: {}
+
+  ccmodmanager@https://codeload.github.com/CCDirectLink/CCModManager/tar.gz/b548a8b7cbd098d20282ee9b2bad28af22ee4518: {}
 
   chalk@4.1.2:
     dependencies:

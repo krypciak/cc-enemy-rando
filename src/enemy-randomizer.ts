@@ -1,12 +1,6 @@
-export function fixedRandomNumber(seed: number): number {
-    // @ts-expect-error
-    const number = new Math.seedrandomSeed(seed)()
-    return number
-}
+import { Opts } from './options'
+import { Enemy, MapEntity, Spawner, fixedRandomInt } from './util'
 
-export function fixedRandomInt(seed: number, min: number, max: number): number {
-    return (fixedRandomNumber(seed) * (max - min) + min) >>> 0
-}
 export interface EnemyData {
     regularEnemies: RawRegularEnemies
 }
@@ -21,46 +15,12 @@ export interface RawRegularEnemy {
 
 let mapId = 1000
 
-export type MapEntity = Omit<sc.MapModel.MapEntity, 'level'> & { z: number }
-
-export interface Spawner extends sc.MapModel.MapEntity {
-    settings: ig.ENTITY.EnemySpawner.Settings
-}
-export interface Enemy extends sc.MapModel.MapEntity {
-    settings: ig.ENTITY.Enemy.Settings
-}
-export interface EventTrigger extends sc.MapModel.MapEntity {
-    settings: ig.ENTITY.EventTrigger.Settings
-}
-
-// interface EnemyType {
-//     count: number
-//     info: EnemyInfo
-// }
-
-// interface EnemyInfo {
-//     type: string
-//     level: number
-//     customGenerated?: true
-// }
-
 interface Rectangle {
     x: number
     y: number
     z: number
     width: number
     height: number
-}
-
-export interface EnemyGeneratorPreset {
-    enable: boolean
-    randomizeSpawners: boolean
-    randomizeEnemies: boolean
-    elementCompatibility: boolean
-    spawnMapObjects: boolean
-
-    enduranceRange: [min: number, max: number]
-    levelRange: [min: number, max: number]
 }
 
 type ElementFlags = [heat: boolean, cold: boolean, shock: boolean, wave: boolean]
@@ -75,7 +35,6 @@ export function randomizeEnemy(
     enemy: Enemy,
     seed: number,
     data: EnemyData,
-    preset: EnemyGeneratorPreset,
     changeMap: Record<string, string[]>,
     levels: sc.MapModel.Map['levels']
 ) {
@@ -97,7 +56,6 @@ export function randomizeEnemy(
         { x: enemy.x, y: enemy.y, width: 16, height: 16, z },
         (enemy.x * enemy.y * seed) % 1000000,
         data.regularEnemies,
-        preset,
         changeMap
     )
 }
@@ -106,7 +64,6 @@ export function randomizeSpawner(
     spawner: Spawner,
     seed: number,
     data: EnemyData,
-    preset: EnemyGeneratorPreset,
     changeMap: Record<string, string[]>,
     levels: sc.MapModel.Map['levels']
 ) {
@@ -139,7 +96,6 @@ export function randomizeSpawner(
                 { x: spawner.x, y: spawner.y, width: spawner.settings.size!.x, height: spawner.settings.size!.y, z },
                 enemySeed,
                 data.regularEnemies,
-                preset,
                 changeMap
             )
 
@@ -177,7 +133,6 @@ function getRandomEnemy(
     rect: Rectangle,
     enemySeed: number,
     data: RawRegularEnemies,
-    preset: EnemyGeneratorPreset,
     changeMap: Record<string, string[]>
 ) {
     const enemyType = enemyInfo.type
@@ -199,13 +154,10 @@ function getRandomEnemy(
     const compatibleEnemyTypes = Object.entries(data).filter(entry => {
         let entryEndurance = data[entry[0]].endurance
 
-        if (
-            entryEndurance - preset.enduranceRange[0] > endurance ||
-            entryEndurance + preset.enduranceRange[1] < endurance
-        ) {
+        if (entryEndurance - Opts.enduranceMin > endurance || entryEndurance + Opts.enduranceMax < endurance) {
             return false
         }
-        if (!preset.elementCompatibility) {
+        if (!Opts.elementCompatibility) {
             return true
         }
 
@@ -236,22 +188,10 @@ function getRandomEnemy(
 
     const randTypeIndex = fixedRandomInt(enemySeed, 0, compatibleEnemyTypes.length)
     const randType = compatibleEnemyTypes[randTypeIndex][0]
-    console.log(
-        'rand',
-        enemySeed,
-        randTypeIndex,
-        'from',
-        enemyType,
-        'to',
-        randType,
-        'endurance',
-        endurance,
-        'to',
-        data[randType].endurance
-    )
+    // console.log( 'rand', enemySeed, randTypeIndex, 'from', enemyType, 'to', randType, 'endurance', endurance, 'to', data[randType].endurance)
 
     enemySeed *= 1.5
-    let randLevel = fixedRandomInt(enemySeed, origLevel - preset.levelRange[0], origLevel + preset.levelRange[1])
+    let randLevel = fixedRandomInt(enemySeed, origLevel - Opts.levelMinus, origLevel + Opts.levelPlus)
     if (randLevel <= 0) {
         randLevel = 1
     }
@@ -266,7 +206,7 @@ function getRandomEnemy(
     enemyInfo.customGenerated = true
 
     let mapObjects: MapEntity[] = []
-    if (preset.spawnMapObjects) {
+    if (Opts.spawnMapObjects) {
         mapObjects = spawnMapObjects(data[randType].mapElements, rect, elements)
     }
     return mapObjects
