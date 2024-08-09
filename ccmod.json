@@ -1,0 +1,16 @@
+{
+    "id": "cc-enemy-rando",
+    "version": "1.0.0",
+    "title": "Enemy randomizer",
+    "description": "Randomizes the enemy types while keeping it somewhat balanced",
+    "repository": "https://github.com/krypciak/cc-ts-template-esbuild",
+    "tags": ["fun"],
+    "authors": "krypek",
+    "icons": {
+        "24": "icon/icon.png"
+    },
+    "dependencies": {
+        "crosscode": ">=1.4.0"
+    },
+    "plugin": "plugin.js"
+}
