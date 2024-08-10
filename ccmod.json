@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "title": "Enemy randomizer",
     "description": "Randomizes the enemy types while keeping it somewhat balanced",
-    "repository": "https://github.com/krypciak/cc-ts-template-esbuild",
+    "repository": "https://github.com/krypciak/cc-enemy-rando",
     "tags": ["fun"],
     "authors": "krypek",
     "icons": {
