@@ -4,14 +4,6 @@
 
 ## [Unreleased]
 
-### Added
+Initial release
 
-- Something
 
-### Changed
-
-- Something
-
-### Fixed
-
-- Something
