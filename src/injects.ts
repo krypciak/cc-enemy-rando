@@ -1,4 +1,4 @@
-import { MapEntity, isEnemy, isEventTrigger, isSpawner } from './util'
+import { MapEntity } from './util'
 import { EnemyData, randomizeEnemy, randomizeSpawner } from './enemy-randomizer'
 import { Opts } from './options'
 import { getSeed } from './plugin'
@@ -31,9 +31,9 @@ export function injectPrestart(enemyData: EnemyData) {
                 const entityNameToTypeMap: Record<string, string> = {}
                 for (const entity of map.entities) {
                     let mapObjects: MapEntity[] | undefined
-                    if (isSpawner(entity) && Opts.randomizeSpawners) {
+                    if (entity.type == 'EnemySpawner' && Opts.randomizeSpawners) {
                         mapObjects = randomizeSpawner(entity, seed, enemyData, changeMap, map.levels)
-                    } else if (isEnemy(entity) && Opts.randomizeEnemies) {
+                    } else if (entity.type == 'Enemy' && Opts.randomizeEnemies) {
                         entityNameToTypeMap[entity.settings.name!] = entity.settings.enemyInfo.type
                         mapObjects = randomizeEnemy(entity, seed, enemyData, changeMap, map.levels)
                     }
@@ -44,7 +44,7 @@ export function injectPrestart(enemyData: EnemyData) {
 
                 // search for SET_TYPED_ENEMY_TARGET in EventTrigger's and replace old enemy types with new
                 for (const entity of map.entities) {
-                    if (!isEventTrigger(entity)) continue
+                    if (entity.type != 'EventTrigger') continue
 
                     const events = entity.settings.event!
 

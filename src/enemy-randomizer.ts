@@ -1,5 +1,5 @@
 import { Opts } from './options'
-import { Enemy, MapEntity, Spawner, fixedRandomInt } from './util'
+import { MapEntity, fixedRandomInt } from './util'
 
 export interface EnemyData {
     regularEnemies: RawRegularEnemies
@@ -32,7 +32,7 @@ export async function loadAllEnemyTypes(data: RawRegularEnemies) {
 }
 
 export function randomizeEnemy(
-    enemy: Enemy,
+    enemy: sc.MapModel.MapEntity<'Enemy'>,
     seed: number,
     data: EnemyData,
     changeMap: Record<string, string[]>,
@@ -61,7 +61,7 @@ export function randomizeEnemy(
 }
 
 export function randomizeSpawner(
-    spawner: Spawner,
+    spawner: sc.MapModel.MapEntity<'EnemySpawner'>,
     seed: number,
     data: EnemyData,
     changeMap: Record<string, string[]>,
@@ -219,87 +219,53 @@ function spawnMapObjects(mapObject: string, rect: Rectangle, elements: ElementFl
     const y2 = rect.y + rect.height
     let z = rect.z
     switch (mapObject) {
-        case 'pole': {
+        case 'pole':
             return [elementPole(mx - 8, my + 64, z)]
-        }
-        case 'magnet': {
+        case 'magnet':
             return [magnet(mx - 8, y2 - 24, z, 'NORTH')]
-        }
-        case 'teslaCoil': {
+        case 'teslaCoil':
             return [
                 teslaCoil(rect.x + 4, rect.y + 4, z, 'SOURCE'),
                 antiCompressor(rect.x + 24, rect.y + 4, z),
                 teslaCoil(rect.x + 4, rect.y + 20, z, 'GROUND_DISCHARGE'),
                 compressor(rect.x - 20, rect.y + 4, z),
             ]
-        }
-        case 'compressor': {
+        case 'compressor':
             return [boldPntMarker(mx - 16, my - 16, z, 1), compressor(rect.x + 80, y2 - 80, z)]
-        }
+
         case 'waveTeleport': {
-            let arr = [waveTeleport(rect.x + 32, rect.y + 32, z), waveTeleport(x2 - 32, y2 - 32, z)]
+            const arr: MapEntity[] = [waveTeleport(rect.x + 32, rect.y + 32, z), waveTeleport(x2 - 32, y2 - 32, z)]
             // if player is missing wave
             if (!elements[3]) {
-                arr.push(ballChangerElement(rect.x + 32, y2 - 48, z, 'WAVE', 'NORTH'))
-                arr.push(ballChangerElement(x2 - 48, rect.y + 32, z, 'WAVE', 'NORTH'))
+                arr.push(ballChangerElement(rect.x + 32, y2 - 48, z, 'WAVE'))
+                arr.push(ballChangerElement(x2 - 48, rect.y + 32, z, 'WAVE'))
             }
             return arr
         }
-        case 'waterBubblePanel': {
+        case 'waterBubblePanel':
             return [waterBubblePanel(mx + 56, my + 56, z)]
-        }
     }
     return []
 }
 
-function elementPole(x: number, y: number, z: number) {
-    return {
-        type: 'ElementPole',
-        x,
-        y,
-        z,
-        settings: {
-            name: '',
-            poleType: 'LONG',
-            group: '',
-            mapId: mapId++,
-        },
-    }
+function elementPole(x: number, y: number, z: number): MapEntity<'ElementPole'> {
+    return { type: 'ElementPole', x, y, z, settings: { name: '', poleType: 'LONG', group: '', mapId: mapId++ } }
 }
 
-function waterBubblePanel(x: number, y: number, z: number) {
-    return {
-        type: 'WaterBubblePanel',
-        x,
-        y,
-        z,
-        settings: {
-            name: '',
-            mapId: mapId++,
-        },
-    }
+function waterBubblePanel(x: number, y: number, z: number): MapEntity<'WaterBubblePanel'> {
+    return { type: 'WaterBubblePanel', x, y, z, settings: { name: '', mapId: mapId++ } }
 }
 
-function waveTeleport(x: number, y: number, z: number) {
-    return {
-        type: 'WaveTeleport',
-        x,
-        y,
-        z,
-        settings: {
-            name: '',
-            mapId: mapId++,
-        },
-    }
+function waveTeleport(x: number, y: number, z: number): MapEntity<'WaveTeleport'> {
+    return { type: 'WaveTeleport', x, y, z, settings: { name: '', mapId: mapId++ } }
 }
 
 function ballChangerElement(
     x: number,
     y: number,
     z: number,
-    element: 'HEAT' | 'COLD' | 'WAVE' | 'HEAT',
-    dir: 'NORTH' | 'SOUTH' | 'EAST' | 'WEST'
-) {
+    element: 'HEAT' | 'COLD' | 'WAVE' | 'HEAT'
+): MapEntity<'BallChanger'> {
     return {
         type: 'BallChanger',
         x,
@@ -310,80 +276,34 @@ function ballChangerElement(
             condition: '',
             changerType: {
                 type: 'CHANGE_ELEMENT',
-                settings: {
-                    element,
-                    dir,
-                },
+                settings: { element },
             },
             mapId: mapId++,
         },
     }
 }
 
-function compressor(x: number, y: number, z: number) {
-    return {
-        type: 'Compressor',
-        x,
-        y,
-        z,
-        settings: {
-            name: '',
-            mapId: mapId++,
-        },
-    }
+function compressor(x: number, y: number, z: number): MapEntity<'Compressor'> {
+    return { type: 'Compressor', x, y, z, settings: { name: '', mapId: mapId++ } }
 }
 
-function antiCompressor(x: number, y: number, z: number) {
-    return {
-        type: 'AntiCompressor',
-        x,
-        y,
-        z,
-        settings: {
-            name: '',
-            mapId: mapId++,
-        },
-    }
+function antiCompressor(x: number, y: number, z: number): MapEntity<'AntiCompressor'> {
+    return { type: 'AntiCompressor', x, y, z, settings: { name: '', mapId: mapId++ } }
 }
 
-function boldPntMarker(x: number, y: number, z: number, index: number) {
-    return {
-        type: 'Marker',
-        x,
-        y,
-        z,
-        settings: {
-            name: 'boldPnt' + index,
-            dir: 'NORTH',
-            mapId: mapId++,
-        },
-    }
+function boldPntMarker(x: number, y: number, z: number, index: number): MapEntity<'Marker'> {
+    return { type: 'Marker', x, y, z, settings: { name: 'boldPnt' + index, dir: 'NORTH', mapId: mapId++ } }
 }
 
-function magnet(x: number, y: number, z: number, dir: 'NORTH' | 'SOUTH' | 'EAST' | 'WEST') {
-    return {
-        type: 'Magnet',
-        x,
-        y,
-        z,
-        settings: {
-            name: '',
-            dir,
-            mapId: mapId++,
-        },
-    }
+function magnet(x: number, y: number, z: number, dir: 'NORTH' | 'SOUTH' | 'EAST' | 'WEST'): MapEntity<'Magnet'> {
+    return { type: 'Magnet', x, y, z, settings: { name: '', dir, mapId: mapId++ } }
 }
 
-function teslaCoil(x: number, y: number, z: number, type: 'SOURCE' | 'EXTENDER' | 'GROUND_DISCHARGE') {
-    return {
-        type: 'TeslaCoil',
-        x,
-        y,
-        z,
-        settings: {
-            name: '',
-            coilType: type,
-            mapId: mapId++,
-        },
-    }
+function teslaCoil(
+    x: number,
+    y: number,
+    z: number,
+    type: 'SOURCE' | 'EXTENDER' | 'GROUND_DISCHARGE'
+): MapEntity<'TeslaCoil'> {
+    return { type: 'TeslaCoil', x, y, z, settings: { name: '', coilType: type, mapId: mapId++ } }
 }

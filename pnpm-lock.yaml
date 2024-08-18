@@ -22,7 +22,7 @@ importers:
         version: 6.21.0(eslint@8.57.0)(typescript@5.4.2)
       ccmodmanager:
         specifier: github:CCDirectLink/CCModManager
-        version: https://codeload.github.com/CCDirectLink/CCModManager/tar.gz/b548a8b7cbd098d20282ee9b2bad28af22ee4518
+        version: https://codeload.github.com/CCDirectLink/CCModManager/tar.gz/b27a583baf0a2829454c925e24e047d8b4bca1fd
       esbuild:
         specifier: ^0.20.0
         version: 0.20.1
@@ -40,7 +40,7 @@ importers:
         version: 5.4.2
       ultimate-crosscode-typedefs:
         specifier: github:krypciak/ultimate-crosscode-typedefs
-        version: https://codeload.github.com/krypciak/ultimate-crosscode-typedefs/tar.gz/79d92a85702d232fcccf4938b0440063cc671367
+        version: https://codeload.github.com/krypciak/ultimate-crosscode-typedefs/tar.gz/ec505ba15cff5624fc18a08f9c81a02374301022
 
 packages:
 
@@ -354,9 +354,9 @@ packages:
     resolution: {integrity: sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==}
     engines: {node: '>=6'}
 
-  ccmodmanager@https://codeload.github.com/CCDirectLink/CCModManager/tar.gz/b548a8b7cbd098d20282ee9b2bad28af22ee4518:
-    resolution: {tarball: https://codeload.github.com/CCDirectLink/CCModManager/tar.gz/b548a8b7cbd098d20282ee9b2bad28af22ee4518}
-    version: 0.9.19
+  ccmodmanager@https://codeload.github.com/CCDirectLink/CCModManager/tar.gz/b27a583baf0a2829454c925e24e047d8b4bca1fd:
+    resolution: {tarball: https://codeload.github.com/CCDirectLink/CCModManager/tar.gz/b27a583baf0a2829454c925e24e047d8b4bca1fd}
+    version: 0.9.20
 
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
@@ -722,8 +722,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  ultimate-crosscode-typedefs@https://codeload.github.com/krypciak/ultimate-crosscode-typedefs/tar.gz/79d92a85702d232fcccf4938b0440063cc671367:
-    resolution: {tarball: https://codeload.github.com/krypciak/ultimate-crosscode-typedefs/tar.gz/79d92a85702d232fcccf4938b0440063cc671367}
+  ultimate-crosscode-typedefs@https://codeload.github.com/krypciak/ultimate-crosscode-typedefs/tar.gz/ec505ba15cff5624fc18a08f9c81a02374301022:
+    resolution: {tarball: https://codeload.github.com/krypciak/ultimate-crosscode-typedefs/tar.gz/ec505ba15cff5624fc18a08f9c81a02374301022}
     version: 0.0.1
     engines: {node: '>=10.0.0'}
 
@@ -1009,7 +1009,7 @@ snapshots:
 
   callsites@3.1.0: {}
 
-  ccmodmanager@https://codeload.github.com/CCDirectLink/CCModManager/tar.gz/b548a8b7cbd098d20282ee9b2bad28af22ee4518: {}
+  ccmodmanager@https://codeload.github.com/CCDirectLink/CCModManager/tar.gz/b27a583baf0a2829454c925e24e047d8b4bca1fd: {}
 
   chalk@4.1.2:
     dependencies:
@@ -1390,7 +1390,7 @@ snapshots:
 
   typescript@5.4.2: {}
 
-  ultimate-crosscode-typedefs@https://codeload.github.com/krypciak/ultimate-crosscode-typedefs/tar.gz/79d92a85702d232fcccf4938b0440063cc671367:
+  ultimate-crosscode-typedefs@https://codeload.github.com/krypciak/ultimate-crosscode-typedefs/tar.gz/ec505ba15cff5624fc18a08f9c81a02374301022:
     dependencies:
       '@types/jquery': 1.10.45
       '@types/node': 11.15.54
