@@ -2,6 +2,8 @@
 
 # CrossCode enemy randomizer
 
+[![CCModManager badge](https://raw.githubusercontent.com/CCDirectLink/CCModManager/refs/heads/master/icon/badge.png)](https://github.com/CCDirectLink/CCModManager)
+
 ![Screenshot of randomized enemies in Autumn's Rise](https://github.com/user-attachments/assets/f5bf0686-bb95-4040-a31c-d81b8b5b128b)
 
 ![Screenshot of randomized enemies in So'najiz Temple](https://github.com/user-attachments/assets/24a6ff16-3846-455d-b14e-180ae0b092e5)
