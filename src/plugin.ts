@@ -1,7 +1,7 @@
-import { PluginClass } from 'ultimate-crosscode-typedefs/modloader/mod'
-import { Mod1 } from './types'
+import type { PluginClass } from 'ultimate-crosscode-typedefs/modloader/mod'
+import type { Mod1 } from './types'
 
-import { EnemyData } from './enemy-randomizer'
+import type { EnemyData } from './enemy-randomizer'
 import { injectPoststart, injectPrestart } from './injects'
 
 import enemyData from '../json/enemy-data.json'

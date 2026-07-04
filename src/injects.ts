@@ -1,5 +1,5 @@
-import { MapEntity } from './util'
-import { EnemyData, randomizeEnemy, randomizeSpawner } from './enemy-randomizer'
+import type { MapEntity } from './util'
+import { type EnemyData, randomizeEnemy, randomizeSpawner } from './enemy-randomizer'
 import { Opts } from './options'
 import { getSeed } from './plugin'
 

@@ -1,4 +1,4 @@
-import { Mod } from 'ultimate-crosscode-typedefs/modloader/mod'
+import type { Mod } from 'ultimate-crosscode-typedefs/modloader/mod'
 
 export type Mod1 = Writable<Mod> & {
     isCCModPacked: boolean

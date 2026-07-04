@@ -1,5 +1,5 @@
 import { Opts } from './options'
-import { MapEntity, fixedRandomInt } from './util'
+import { type MapEntity, fixedRandomInt } from './util'
 
 export interface EnemyData {
     regularEnemies: RawRegularEnemies
